@@ -16,9 +16,15 @@ import { CreateUserDto, UpdateUserDto } from '../dtos/user.dto';
 export class UsersController {
   constructor(private usersService: UsersService) {}
 
+  //* Remember static routes on TOP
   @Get()
   findAll() {
     return this.usersService.findAll();
+  }
+
+  @Get('tasks')
+  getTasks() {
+    return this.usersService.getTasks();
   }
 
   @Get(':id')
@@ -37,10 +43,7 @@ export class UsersController {
   }
 
   @Put(':id')
-  update(
-    @Param('id', ParseIntPipe) id: number,
-    @Body() payload: UpdateUserDto,
-  ) {
+  update(@Param('id', ParseIntPipe) id: number, @Body() payload: UpdateUserDto) {
     return this.usersService.update(id, payload);
   }
 
