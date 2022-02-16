@@ -2,44 +2,41 @@ import {
   Column,
   CreateDateColumn,
   Entity,
-  OneToMany,
-  OneToOne,
+  ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 
-import { User } from './user.entity';
+import { Exclude } from 'class-transformer';
+
+import { Product } from '../../products/entities/product.entity';
 import { Order } from './order.entity';
 
 @Entity()
-export class Customer {
+export class OrderItem {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ type: 'varchar', length: 255 })
-  name: string;
-
-  @Column({ type: 'varchar', length: 255 })
-  lastName: string;
-
-  @Column({ type: 'varchar', length: 255 })
-  phone: string;
-
+  @Exclude()
   @CreateDateColumn({
     type: 'timestamptz',
     default: () => 'CURRENT_TIMESTAMP',
   })
   createAt: Date;
 
+  @Exclude()
   @UpdateDateColumn({
     type: 'timestamptz',
     default: () => 'CURRENT_TIMESTAMP',
   })
   updateAt: Date;
 
-  @OneToOne(() => User, (user) => user.customer, { nullable: true })
-  user: User;
+  @Column({ type: 'int' })
+  quantity: number;
 
-  @OneToMany(() => Order, (order) => order.customer)
-  orders: Order[];
+  @ManyToOne(() => Product)
+  product: Product;
+
+  @ManyToOne(() => Order, (order) => order.items)
+  order: Order;
 }

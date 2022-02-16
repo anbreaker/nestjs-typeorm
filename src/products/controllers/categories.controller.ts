@@ -32,10 +32,7 @@ export class CategoriesController {
   }
 
   @Put(':id')
-  update(
-    @Param('id', ParseIntPipe) id: number,
-    @Body() payload: UpdateCategoryDto,
-  ) {
+  update(@Param('id', ParseIntPipe) id: number, @Body() payload: UpdateCategoryDto) {
     return this.categoriesService.update(id, payload);
   }
 
