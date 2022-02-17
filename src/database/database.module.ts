@@ -18,9 +18,7 @@ const API_KEY_PROD = 'PROD1212121SA';
           url: configService.postgresUrl,
           synchronize: false,
           autoLoadEntities: true,
-          ssl: {
-            rejectUnauthorized: false,
-          },
+          // extra: { ssl: true, rejectUnauthorized: false },
         };
       },
     }),
